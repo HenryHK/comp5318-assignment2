@@ -8,7 +8,7 @@ predict_sample = np.loadtxt('data/predict-sample-0.csv', delimiter=',')
 predict_target = np.loadtxt('data/predict-target-0.csv', delimiter=',')
 
 knn = KNeighborsClassifier()
-knn.fit(sample, target)  # 训练数据来学习，不需要返回值
+knn.fit(sample, target)
 
 result = knn.predict(predict_sample)
 result_metrics = metrics.classification_report(result, predict_target)

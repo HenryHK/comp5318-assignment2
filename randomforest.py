@@ -8,7 +8,7 @@ predict_sample = np.loadtxt('data/predict-sample-0.csv', delimiter=',')
 predict_target = np.loadtxt('data/predict-target-0.csv', delimiter=',')
 
 rf = ensemble.RandomForestClassifier()
-rf.fit(sample, target)  # 训练数据来学习，不需要返回值
+rf.fit(sample, target)
 
 result = classifier.predict(predict_sample)
 result_metrics = metrics.classification_report(result, predict_target)
