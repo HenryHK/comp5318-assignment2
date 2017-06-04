@@ -1,9 +1,11 @@
-import numpy as np
-from sklearn.cluster import KMeans
-from operator import itemgetter, attrgetter
-from sklearn.linear_model import LogisticRegression
-from sklearn import metrics
 import collections
+from operator import attrgetter, itemgetter
+
+import numpy as np
+from sklearn import ensemble, metrics
+from sklearn.cluster import KMeans
+from sklearn.linear_model import LogisticRegression
+
 
 def e_distance(x, y):
     """
@@ -58,41 +60,24 @@ for key, values in d.items():
         sample.append(each[0][0])
         target.append(each[0][1])
 
-# sample_with_distance.sort(key=itemgetter(1),reverse=False)
-# target_with_distance.sort(key=itemgetter(1),reverse=False)
+# with open('data/train-sample-1-orc.csv', 'w') as data:
+#     for line in sample:
+#         data.write(",".join(line))
+#         data.write("\n")
+# with open('data/train-target-1-orc.csv', 'w') as data:
+#     for line in target:
+#         data.write(line)
+#         data.write("\n")
 
-# outlier = 0.95
+new_length = len(sample)
 
-# length = len(sample_with_distance)
-# sample_with_distance = sample_with_distance[0:int(length*outlier)]
-# target_with_distance = target_with_distance[0:int(length*outlier)]
+print("Remove "+str(original_length-new_length)+" outliers")
 
-# sample = []
-# target = []
+rf = ensemble.RandomForestClassifier()
+rf.fit(sample, target)
 
-# for data, distance in sample_with_distance:
-#     sample.append(data)
-
-# for data, distance in target_with_distance:
-#     target.append(data)
-
-# new_length = len(sample)
-
-# print("Remove "+str(original_length-new_length)+" outliers")
-
-# lr begins
-
-classifier = LogisticRegression()
-classifier.fit(sample, target)
-
-result = classifier.predict(predict_sample)
-
+result = rf.predict(predict_sample)
 result_metrics = metrics.classification_report(result, predict_target)
 
-with open('result/lr_with_orc.txt', 'w') as output:
+with open('result/rf_with_kmeans.txt', 'w') as output:
     output.write(result_metrics)
-
-# kmeans.fit(sample)
-
-# with open('result/knn.txt', 'w') as output:
-#     output.write(result_metrics)
