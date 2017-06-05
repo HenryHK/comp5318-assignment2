@@ -3,25 +3,27 @@ from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
 import time
 
-sample = np.loadtxt('data/train-sample-2.csv', delimiter=',')
-target = np.loadtxt('data/train-target-2.csv', delimiter=',')
-predict_sample = np.loadtxt('data/predict-sample-2.csv', delimiter=',')
-predict_target = np.loadtxt('data/predict-target-2.csv', delimiter=',')
+for i in range(10):
+    sample = np.loadtxt('data/train-sample-'+str(i)+'.csv', delimiter=',')
+    target = np.loadtxt('data/train-target-'+str(i)+'.csv', delimiter=',')
+    predict_sample = np.loadtxt('data/predict-sample-'+str(i)+'.csv', delimiter=',')
+    predict_target = np.loadtxt('data/predict-target-'+str(i)+'.csv', delimiter=',')
 
-begin = time.time()
+    begin = time.time()
 
-classifier = LogisticRegression()
-classifier.fit(sample, target)
+    classifier = LogisticRegression()
+    classifier.fit(sample, target)
 
-print("sample size: "+str(len(sample)))
+    print("sample size: "+str(len(sample)))
 
-result = classifier.predict(predict_sample)
+    result = classifier.predict(predict_sample)
 
-end = time.time()
+    end = time.time()
 
-metrics_result = metrics.classification_report(result, predict_target)
+    metrics_result = metrics.classification_report(result, predict_target)
 
-with open('result/lr.txt', 'w') as output:
-    output.write(metrics_result)
-    output.write("\n")
-    output.write("Use: "+str(end-begin)+"s")
+    with open('result/lr.txt', 'a') as output:
+        output.write(metrics_result)
+        output.write("\n")
+        output.write("Use: "+str(end-begin)+"s")
+        output.write('------------------------------------\n')

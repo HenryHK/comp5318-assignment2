@@ -1,0 +1,13 @@
+\BOOKMARK [1][-]{section*.3}{Introduction}{}% 1
+\BOOKMARK [1][-]{section*.4}{Specification}{}% 2
+\BOOKMARK [1][-]{section*.5}{Previous Work}{}% 3
+\BOOKMARK [1][-]{section*.6}{Methods and Design}{}% 4
+\BOOKMARK [2][-]{section*.7}{Preprocessing}{section*.6}% 5
+\BOOKMARK [2][-]{section*.8}{Algorithm Selection}{section*.6}% 6
+\BOOKMARK [2][-]{section*.9}{Algorithm Introduction}{section*.6}% 7
+\BOOKMARK [3][-]{section*.10}{kNN}{section*.9}% 8
+\BOOKMARK [3][-]{section*.11}{Linear Regression}{section*.9}% 9
+\BOOKMARK [3][-]{section*.12}{Random Forest}{section*.9}% 10
+\BOOKMARK [1][-]{section*.13}{Experiments and Discussion}{}% 11
+\BOOKMARK [1][-]{section*.14}{Methods and Design}{}% 12
+\BOOKMARK [1][-]{section*.15}{References}{}% 13

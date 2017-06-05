@@ -3,25 +3,28 @@ from sklearn import ensemble
 from sklearn import metrics
 import time
 
-sample = np.loadtxt('data/train-sample-2.csv', delimiter=',')
-target = np.loadtxt('data/train-target-2.csv', delimiter=',')
-predict_sample = np.loadtxt('data/predict-sample-2.csv', delimiter=',')
-predict_target = np.loadtxt('data/predict-target-2.csv', delimiter=',')
 
-begin = time.time()
+for i in range(10):
+    sample = np.loadtxt('data/train-sample-'+str(i)+'.csv', delimiter=',')
+    target = np.loadtxt('data/train-target-'+str(i)+'.csv', delimiter=',')
+    predict_sample = np.loadtxt('data/predict-sample-'+str(i)+'.csv', delimiter=',')
+    predict_target = np.loadtxt('data/predict-target-'+str(i)+'.csv', delimiter=',')
 
-rf = ensemble.RandomForestClassifier()
-rf.fit(sample, target)
+    begin = time.time()
 
-result = rf.predict(predict_sample)
+    rf = ensemble.RandomForestClassifier()
+    rf.fit(sample, target)
 
-end = time.time()
+    result = rf.predict(predict_sample)
 
-print(end-begin)
+    end = time.time()
 
-result_metrics = metrics.classification_report(result, predict_target)
+    print(end-begin)
 
-with open('result/rf.txt', 'w') as output:
-    output.write(result_metrics)
-    output.write("\n")
-    output.write("Use: "+str(end-begin)+"s")
+    result_metrics = metrics.classification_report(result, predict_target)
+
+    with open('result/rf.txt', 'a') as output:
+        output.write(result_metrics)
+        output.write("\n")
+        output.write("Use: "+str(end-begin)+"s")
+        output.write('------------------------------------\n')
