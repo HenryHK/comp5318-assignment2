@@ -1,10 +1,13 @@
 import collections
+from operator import attrgetter, itemgetter
+
 import numpy as np
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn import metrics
-import time
+from sklearn import ensemble, metrics
 from sklearn.cluster import KMeans
-from operator import itemgetter, attrgetter
+from sklearn.linear_model import LogisticRegression
+
+import time
+
 
 def e_distance(x, y):
     """
@@ -28,7 +31,6 @@ for count in range(10):
     print("sample size: "+str(original_length))
 
     begin = time.time()
-
     k = 7
     kmeans = KMeans(n_clusters=k).fit(sample)
 
@@ -62,23 +64,23 @@ for count in range(10):
             sample.append(each[0][0])
             target.append(each[0][1])
 
-    preprocessing_end = time.time()
 
-    knn = KNeighborsClassifier()
-    knn.fit(sample, target)
+    new_length = len(sample)
 
-    result = knn.predict(predict_sample)
+    print("Remove "+str(original_length-new_length)+" outliers")
+    end_preprocessing = time.time()
 
+    rf = ensemble.RandomForestClassifier()
+    rf.fit(sample, target)
+
+    result = rf.predict(predict_sample)
     end = time.time()
-
-
     result_metrics = metrics.classification_report(result, predict_target)
 
-
-    with open('result/knn_with_orc.txt', 'a') as output:
+    with open('result/rf_with_orc.txt', 'w') as output:
         output.write(result_metrics)
         output.write('\n')
         output.write('preprocessing uses: '+str(preprocessing_end-begin)+"s\n")
-        output.write("knn use: "+str(end-preprocessing_end)+"s\n")
+        output.write("rf use: "+str(end-preprocessing_end)+"s\n")
         output.write("In total: "+str(end-begin)+"s\n")
         output.write("-------------------------------")

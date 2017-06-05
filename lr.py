@@ -2,6 +2,7 @@ import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn import metrics
 import time
+import pandas as pd
 
 for i in range(10):
     sample = np.loadtxt('data/train-sample-'+str(i)+'.csv', delimiter=',')
@@ -21,6 +22,9 @@ for i in range(10):
     end = time.time()
 
     metrics_result = metrics.classification_report(result, predict_target)
+    confusion_matrix = pd.crosstab(predict_target, result, rownames=['True'], colnames=['Predicted'], margins=True)
+
+    print(confusion_matrix)
 
     with open('result/lr.txt', 'a') as output:
         output.write(metrics_result)

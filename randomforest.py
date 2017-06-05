@@ -2,6 +2,7 @@ import numpy as np
 from sklearn import ensemble
 from sklearn import metrics
 import time
+import pandas as pd
 
 
 for i in range(10):
@@ -23,8 +24,12 @@ for i in range(10):
 
     result_metrics = metrics.classification_report(result, predict_target)
 
-    with open('result/rf.txt', 'a') as output:
-        output.write(result_metrics)
-        output.write("\n")
-        output.write("Use: "+str(end-begin)+"s")
-        output.write('------------------------------------\n')
+    confusion_matrix = pd.crosstab(predict_target, result, rownames=['True'], colnames=['Predicted'], margins=True)
+
+    print(confusion_matrix)
+
+    # with open('result/rf.txt', 'a') as output:
+    #     output.write(result_metrics)
+    #     output.write("\n")
+    #     output.write("Use: "+str(end-begin)+"s")
+    #     output.write('------------------------------------\n')

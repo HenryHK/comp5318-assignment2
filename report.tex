@@ -84,8 +84,15 @@
         \ Dasheng Ge 460440743}
 
 \maketitle
+
+\begin{abstract}
+   This project re-classifies Covtype dataset using three classification algorithms: kNN, Linear Regression and Random Forest. Evaluating the performance of these three supervised algorithms and choose the most appropriate one fitting in solving similar datasets classification problems. Finally, kNN was considered as the best.
+\end{abstract}
+
 \tableofcontents
 \newpage
+
+
 
 %-----------------
 % Section title formatting
@@ -95,12 +102,6 @@
 %-----------------
 % BODY
 %-----------------
-
-\section*{Abstract}
-pass
-\newpage
-
-
 
 \section*{Introduction}
 \addcontentsline{toc}{section}{Introduction}
@@ -180,22 +181,13 @@ This part will introduce the algorithms separately and describe the significance
 
 \subsubsection*{kNN}
 \addcontentsline{toc}{subsubsection}{kNN}
-K-nearest neighbors algorithm (k-NN) is a non-parametric method used for classification. Representing instance x as a1(x), as(x),\[\cdots\],an(x)
-\newline(*formula*)
-\newline Where:
-\newline ar(x) = the r.th attribute of x. 
-\newline d(xi,xj) = distance between instance xi and xj
+K-nearest neighbors algorithm (k-NN) is a non-parametric method used for classification. Representing instance x as $a_{1}(x)$, $a_{s}(x)$,...,$a_{n}(x)$
+\newline$$d(x_{i}, y_{i}) = \sqrt[]{\sum_{r=1}^{n}(a_{r}(x_{r})-a_{r}(x_{j}))^2}$$
+\newline Where: $a_{r}(x)$ = the r.th attribute of x, $d(x_i,x_j)$ = distance between instance $x_i$ and $x_j$
 \newline for discrete dataset, it performs:
-\newline (*formula*)
-\newline Where:
-\newline v is an element of V set,    
-\newline \[ x_1,x_2,\dots ,x_n\quad\]
-
-
-
-\newline select k nearest instances represented as x1,x2,…, xk. Then return
-\newline (*formula*)
-\newline
+\newline $$\hat{f}(x_q)\leftarrow argmax\sum_{i=1}^k\delta(v,f(x_i))$$
+\newline Where: v is an element of V set,V is finite set $v_1$, $v_2$, $v_3$, ..., $v_n$
+\newline select k nearest instances represented as $x_1$,$x_2$,..., $x_k$. Then return $\hat{f}(x_q)$
 \newline
 In the Covtype dataset, the attribute was fixed as 53.
 \newline kNN needs no special preprocessing.The dataset was directly classified through knn.py
@@ -203,25 +195,23 @@ In the Covtype dataset, the attribute was fixed as 53.
 \subsubsection*{Linear Regression}
 \addcontentsline{toc}{subsubsection}{Linear Regression}
 Logistic Regression can be used as a binary as well as multi-classification regression when the dependent variable is dichotomous. Using the thought of logistic regression, in our assignment, we can build up a linear model:
-\newline (*formula*)
+\newline $$z_i=\vec{x_i} \cdot \vec{w_i} = w_0 + x_{i1}w_1+x_{i2}w_2+...+x_{i(D+1)}w_{(D+1)}$$
 \newline for i=1,2,... n, where :
 \newline w stands for the parameter of the learnt.
 \newline x stands for test data, namely forest instance here. 
-\newline  
 \newline 
 Equating the linear model to a probability p(x) with logistic transformation applied. 
-\newline (*formula*)
+\newline $$\log(\frac{p(\vec{x_i})}{1-p(\vec{x_i})}) = \vec{x_i} \cdot \vec{w_i} = z_i$$
 \newline Therefore, we could derive: 
-\newline (*formula*)
+\newline $$p(\vec{x_i} \cdot \vec{w_i}) = \frac{1}{1+e^{-z_{i}}}$$
 \newline Also, we can have loss function:
-\newline (*formula*)
-\newline Where yi is 0 or 1 in logistic regression. 
-\newline
+\newline $$loss(\vec{w}) = -l(\vec{w}) = \sum_{i=1}^{N}\log(1+e^z-y_iz_i)$$
+Where $y_i$ is 0 or 1 in logistic regression.
 \newline
 Based on the above process and applying gradient descent algorithm for each label, we can get a estimated weights vector w for every label. Using this vector, we can get the most probable label for a specific data. 
 \newline
 \newline
-In this assignment, we designed a specific preprocessing part for improving the performance of LR method, accordingly, we used K-Means in advance in order to achieve statistical outlier removal. Thus, the original dataset had been re-classified with KMeans, and formed 7 new clusters. Then LR worked on the original dataset and the new clustering dataset both to observe if there was an optimization on LR performance.
+In this assignment, we designed a specific preprocessing part for improving the performance of LR method, accordingly, we used K-Means in advance in order to achieve statistical outlier removal. Thus, the original dataset had been re-classified with KMeans, and formed 7 new clusters. Then LR worked on the new clustering dataset both to observe if there was an optimization on LR performance.
 
 
 \subsubsection*{Random Forest}
@@ -230,19 +220,213 @@ A Random Forest consists of a collection of simple tree predictors, each of whic
 \newline
 \newline
 Given a set of simple trees and a set of random predictor variables, the Random Forest method defines a margin function that measures the extent to which the average number of votes for the correct class exceeds the average vote for any other class present in the dependent variable.
-Given an ensemble of classifiers h1(x), h2(x), . . . , hK (x), and with the training set drawn at random from the distribution of the random vector Y, X, define the margin function as:
-\newline (*formula*)
-\newline The error can be defines as:(*formula*)
+Given an ensemble of classifiers $h_{1}(x), h_{2}(x),... , h_{K}(x)$, and with the training set drawn at random from the distribution of the random vector Y, X, define the margin function as:
+\newline $$mg(\vec{X},Y) = av_kI(h_{k}(\vec{X})=Y) - \max \limits_{j \neq Y} av_kI(h_{k}(\vec{X})=Y)$$
+\newline The error can be defines as: $PE^{*} = P_{X,Y}(mg(\vec{X},Y)<0)$
 \newline
 \newline
-While implementation of Random Forest, we did similar preprocessing as LR methods, 
+While implementation of Random Forest, we did similar preprocessing as LR methods, using KMeans to cluster the dataset in advance and then evaluating the performance.
 
 
 \section*{Experiments and Discussion}
 \addcontentsline{toc}{section}{Experiments and Discussion}
 
-\section*{Methods and Design}
-\addcontentsline{toc}{section}{Methods and Design}
+\subsubsection*{Performance}
+\addcontentsline{toc}{subsubsection}{Performance}
+The index for evaluating the performance of each algorithms are: precision, recall, f1-score and support. They are calculated as follows:
+\newline $Precision = TP / (TP + FP)$
+\newline $Recall = TP / (TP + FN)$
+\newline $F1-Score = P*R/2(P+R), P=Precision, R=Recall$
+\newline where: TP means actually true and predict positive; FP means actually false but predict positive; FN means actually false and predict negative.
+\newline Table 1-3 shows the performance of three algorithms using 10 folds cross validation.
+\newline
+\newline In addition to precision, recall and f1-score, we derive a more detailed confusion matrix showing the differences between true data and our prediction. From this matrix, we could easily see the confused classifications. Rows are predictions and columns are real data. The matrix for each algorithm are shown in Table 4-6, which is derived from randomly selected training samples and prediction samples.
+\begin{table}
+\centering
+\caption{kNN performance table}
+\label{my-label}
+\begin{tabular}{lllll}
+ Folds&  Precision&  Recall&  F1-score& Support \\
+ 1&  0.97&  0.97&  0.97& 58102 \\
+ 2& 0.97 &  0.97&  0.97&  58102\\
+ 3&  0.97&  0.97&  0.97& 58102\\
+ 4& 0.97&  0.97&  0.97& 58102\\
+ 5& 0.97&  0.97&  0.97& 58102\\
+ 6& 0.97&  0.97&  0.97& 58102\\
+ 7& 0.97&  0.97&  0.97& 58102\\
+ 8& 0.97&  0.97&  0.97& 58102\\
+ 9& 0.97&  0.97&  0.97& 58102\\
+ 10& 0.97&  0.97&  0.97& 58102\\
+\end{tabular}
+\end{table}
+\begin{table}
+\centering
+\caption{Logistic Regression performance table}
+\label{my-label}
+\begin{tabular}{lllll}
+ Folds&  Precision&  Recall&  F1-score& Support \\
+ 1&  0.76&  0.71&  0.73& 58102 \\
+ 2& 0.73 &  0.71&  0.73&  58102\\
+ 3&  0.75&  0.71&  0.72& 58102\\
+ 4& 0.75&  0.71&  0.73& 58102\\
+ 5& 0.75&  0.71&  0.73& 58102\\
+ 6& 0.75&  0.71&  0.72& 58102\\
+ 7& 0.75&  0.71&  0.73& 58102\\
+ 8& 0.75&  0.71&  0.73& 58102\\
+ 9& 0.75&  0.71&  0.72& 58102\\
+ 10& 0.75&  0.71&  0.73& 58102\\
+\end{tabular}
+\end{table}
+\begin{table}
+\centering
+\caption{Random Forest performance table}
+\label{my-label}
+\begin{tabular}{lllll}
+ Folds&  Precision&  Recall&  F1-score& Support \\
+ 1&  0.95&  0.94&  0.94& 58102 \\
+ 2& 0.95 &  0.95&  0.95&  58102\\
+ 3&  0.95&  0.95&  0.95& 58102\\
+ 4& 0.95&  0.95&  0.95& 58102\\
+ 5& 0.94&  0.94&  0.94& 58102\\
+ 6& 0.95&  0.95&  0.95& 58102\\
+ 7& 0.95&  0.95&  0.95& 58102\\
+ 8& 0.95&  0.95&  0.95& 58102\\
+ 9& 0.95&  0.95&  0.95& 58102\\
+ 10& 0.95&  0.95&  0.95& 58102\\
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{kNN Detailed Confusion Matrix}
+\label{my-label}
+\begin{tabular}{lllllllll}
+Predicted/True    &1.0    &2.0   &3.0 & 4.0  &5.0  & 6.0 &  7.0 &   All\\
+1.0      &  20670  &  604  &   1  &  0  & 10    & 1  &  41 & 21327\\
+2.0       &   532  &27436   & 38  &  0  & 63   & 16   &  5  &28090\\
+3.0     &       0   &  43&  3516   & 9  &  3  &  48   &  0 &  3619\\
+4.0     &       0    &  0  &  47&  214  &  0   & 16   &  0 &   277\\
+5.0      &     11   &  81   & 11   & 0  &867   &  6  &   0   & 976\\
+6.0      &      1   &  44  &  62  &  9  &  3 & 1605 &    0 &  1724\\
+7.0        &   40    &  7   &  0   & 0  &  1    & 0  &2041 &  2089\\
+All       & 21254  &28215 & 3675  &232&  947 & 1692 & 2087 &58102
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{Logistic Regression Detailed Confusion Matrix}
+\label{my-label}
+\begin{tabular}{llllllll}
+Predicted/True    &1.0    &2.0   &3.0 & 4.0  & 6.0 &  7.0 &   All\\
+1.0        &14290   &6238    & 5  &  0  &  0  & 355 & 20888\\
+2.0       &  4973 & 22876 &  546   & 0  & 57  &  63 & 28515\\
+3.0           & 5    &417  &3109   &11  &132   &  0  & 3674\\
+4.0           & 0   &   0  & 194  & 39  & 11 &    0  &  244\\
+5.0          & 22    &876  &  57&    0  & 10   &  0   & 965\\
+6.0            &1 &   625 &1012 &   2  & 91    & 0  & 1731\\
+7.0         &1084   &  23    & 7   & 0   & 0  & 971   &2085\\
+All        &20375&  31055 & 4930 &  52 & 301 & 1389  &58102
+\end{tabular}
+\end{table}
+
+\begin{table}
+\centering
+\caption{Random Forest Detailed Confusion Matrix}
+\label{my-label}
+\begin{tabular}{lllllllll}
+Predicted/True    &1.0    &2.0   &3.0 & 4.0  &5.0  & 6.0 &  7.0 &   All\\
+1.0        &20198   &1082    & 0 &   0   & 4  &   3   & 40 & 21327\\
+2.0         &1074  &26890  &  44   & 3 &  42  &  28   &  9  &28090\\
+3.0         &   2 &    91 & 3432  &  9   & 3  &  82   &  0   &3619\\
+4.0          &  0    &  1  &  44 & 224   & 0   &  8    & 0  &  277\\
+5.0        &   23   & 212  &  14 &   0 & 719    & 8    & 0   & 976\\
+6.0          &  3 &    62   &152  &  6   & 1 & 1500 &    0  & 1724\\
+7.0        &  112  &    8  &   0   & 0  &  0   &  0 & 1969   &2089\\
+All       & 21412 & 28346 & 3686  &242  &769 & 1629 & 2018 & 58102
+\end{tabular}
+\end{table}
+
+\newpage
+\subsubsection*{Runtime}
+\addcontentsline{toc}{subsubsection}{Runtime}
+Table 7 shows the running time on average for each algorithm
+\newline
+\begin{table}
+\centering
+\caption{Running Time}
+\label{my-label}
+\begin{tabular}{ll}
+ Name&  Running Time(seconds per folds on average) \\
+ kNN&  8.22\\
+ Logistic Regression& 183.11\\
+ Random Forest& 13.1
+
+\end{tabular}
+\end{table}
+
+
+\subsubsection*{Comparison and Discussion}
+\addcontentsline{toc}{subsubsection}{Comparison and Discussion}
+Totally, from the results shown above, we found that for a single algorithm, each fold of ten has similar performance and running time, which means that the functions we used from external libraries are quite stable and scientific.
+\newline
+\newline
+kNN algorithm performed excellent with the lowest time cost as well as the highest precise, running out the results within 10 seconds(almost all around 8 seconds) average in each fold, and the precision of all label are the same with the value 0.97, which is a considerable value. The result reflects the Knn algorithm's benefits: 
+\newline 1.Simply and effective
+\newline 2.Training time complexity is O(n) (has linear relationship with the size of training data set)
+\newline 3.Not sensitive to the outlier, since we haven't used outlier remove on it.
+\newline However, the value seemed too much for a classifier.
+\newline
+\newline
+LR performed worst among these three algorithms, with around 3 minutes running each fold, and the accuracy was all around 0.7 for each label and each fold. Since we have known that there are only 53 dimensions in the dataset, the running speed was not ideal. However, to some extent, it is also a good result for a classifier.
+\newline
+\newline
+Random Forest also performed perfect just next to kNN algorithm with high accuracy and short running time. Only in the fifth fold there was a slight fluctuation. The average running time of Random Forest algorithm among ten folds data was 13.1 seconds as Table7 has shown, 5 seconds slower than kNN algorithm.
+\newline
+\newline
+It seems that kNN performed best and should be chosen. However, evaluating an algorithm for datasets should not only focus on one experiment result but also the stability of it.
+\newline
+\newline As is widely known,Knn shows its weakness when the training data set is unbalance, for example the number of label 2 is much smaller than the other 6 labels. In this circumstance, when we try to classify label 2, we actually calculate the nearest label to label 2, not the label 2 itself. However, our dataset is relatively balance: there are certain amount of intersection and overlapping among datasets. So, the kNN has a good performance. 
+\newline
+\newline
+Moreover, kNN is weak at classifying large scale of data such as the data stream mentioned above. However, we have summarized that our dataset has fewer dimensions, and the scale of data and the complexity is not so large as other types if dataset. Therefore, kNN is appropriate.
+\newline
+\newline
+For Random Forest, it has benefits that inherited many of the advantage of CART (Classification and Regression Trees) like: 
+\newline 1.Computationally simple and quick to fit, even for large data set.
+\newline 2.No formal distributional assumption
+\newline 3.Can balance the varieties for unbalanced data set. 
+\newline 4.No over-fitting in processing relatively big data set
+\newline Just like the picture shows:
+\begin{center}
+\includegraphics{IMG_2640.png}
+\end{center}
+Thus, the RF may not look as efficient as KNN after running small dataset. However, as the more and more training data sets put into training, the performance of RF will gradually improved. That's the reason why RF fits for larger scale of dataset, but not the scale like Covtype dataset.
+\newline
+\newline
+In summary, we consider kNN is the best algorithm in dealing with this type
+\subsubsection*{Reflection}
+\addcontentsline{toc}{subsubsection}{Reflection}
+After experiencing the whole process of machine learning, we find that we can do better in the following part:
+\newline
+\newline
+As the description document explained, the dataset contains binary numbers and decimal numbers. With common sense, we should transform the different types of data into unified numbers before training the data set. 
+\newline
+\newline It seems that the different types of columns did not affect the result too much. Through searching relative researches, we make an explanation that when the data in high dimension space, thus the factor that different types of data will not affect each other or even the training model itself too much.
+\newline
+\newline
+However, what if we do preprocessing with different types of columns separately? If we divide the original dataset into different parts, and how to integrate them again then clustering? We have not research about that.
+
+\section*{Conclusions and Future work}
+\addcontentsline{toc}{section}{Conclusions and Future Work}
+In conclusion, we choose kNN as the recommended algorithm in dealing with the similar scale of dataset.
+\newline
+\newline 
+Then what can we do in the future? Here are two objectives:
+\newline  1.Optimize Random Forest: 
+\newline Take Boost algorithm into consideration to optimize the Random Forest method. Try to use Boosting to iterate the data set, and try to modify our new training model based on the last iteration.   
+\newline 2.Testing on other algorithms:
+\newline Although we have used three methods to analysis this work, we still want to use other methods like SVM, NB to training the data set. Future work will lie on analyzing the advantage of each method to determine a suitable method for this work.   
 
 
 
@@ -259,14 +443,28 @@ While implementation of Random Forest, we did similar preprocessing as LR method
 \newpage
 \section*{References}
 \addcontentsline{toc}{section}{References}
+1. Gama J, Rocha R, Medas P. Accurate decision trees for mining high-speed data streams[C]//Proceedings of the ninth ACM SIGKDD international conference on Knowledge discovery and data mining. ACM, 2003: 523-528.
+\newline
+\newline
+2.Oza N C, Russell S. Experimental comparisons of online and batch versions of bagging and boosting[C]//Proceedings of the seventh ACM SIGKDD international conference on Knowledge discovery and data mining. ACM, 2001: 359-364.
+\newline
+\newline
+3.Obradovic Z, Vucetic S. Challenges in Scientific Data Mining: Heterogeneous, Biased, and Large Samples[R]. Technical Report, Center for Information Science and Technology Temple University, 2004.
+\newline
+\newline
+4.Breiman L. Random forests[J]. Machine learning, 2001, 45(1): 5-32.
+\newline
+\newline
+5.Liaw A, Wiener M. Classification and regression by randomForest[J]. R news, 2002, 2(3): 18-22.
 
-1. Easley, D., \& Kleinberg, J. (2010). \textit{Networks, crowds, and markets: Reasoning about a highly connected world}. Cambridge University Press.
-\newline
-\newline
-2. Scrapy, \href{Scrapy website}{https://scrapy.org/}
-\newline
-\newline
+\newpage
+\section*{Appendix: How to run}
+\addcontentsline{toc}{section}{Appendix: How to run}
 
+1. Generate 10 folds. Run \textit{generate\_samples\_and\_targets.py}. The generated file should be in \textit{data} folder.
+\newline
+\newline
+2. Run Python file for each algorithm. e.g. in command line, run \textit{knn\_with\_orc.py}. The result should be in the \textit{result} folder.
 
 \end{document}
 

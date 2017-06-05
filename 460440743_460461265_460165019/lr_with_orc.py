@@ -1,10 +1,10 @@
-import collections
 import numpy as np
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn import metrics
-import time
 from sklearn.cluster import KMeans
 from operator import itemgetter, attrgetter
+from sklearn.linear_model import LogisticRegression
+from sklearn import metrics
+import collections
+import time
 
 def e_distance(x, y):
     """
@@ -17,7 +17,7 @@ def e_distance(x, y):
     y = np.array(y)
     return np.linalg.norm(x-y)
 
-for count in range(10):
+for count in range(0):
 
     sample = np.loadtxt('data/train-sample-'+str(count)+'.csv', delimiter=',')
     target = np.loadtxt('data/train-target-'+str(count)+'.csv', delimiter=',')
@@ -64,21 +64,20 @@ for count in range(10):
 
     preprocessing_end = time.time()
 
-    knn = KNeighborsClassifier()
-    knn.fit(sample, target)
+    classifier = LogisticRegression()
+    classifier.fit(sample, target)
 
-    result = knn.predict(predict_sample)
+    result = classifier.predict(predict_sample)
 
     end = time.time()
 
-
     result_metrics = metrics.classification_report(result, predict_target)
 
-
-    with open('result/knn_with_orc.txt', 'a') as output:
+    with open('result/lr_with_orc.txt', 'a') as output:
         output.write(result_metrics)
         output.write('\n')
         output.write('preprocessing uses: '+str(preprocessing_end-begin)+"s\n")
-        output.write("knn use: "+str(end-preprocessing_end)+"s\n")
+        output.write("lr use: "+str(end-preprocessing_end)+"s\n")
         output.write("In total: "+str(end-begin)+"s\n")
         output.write("-------------------------------")
+

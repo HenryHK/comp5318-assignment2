@@ -1,4 +1,5 @@
 import numpy as np
+import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn import metrics
 import time
@@ -20,9 +21,11 @@ for i in range(10):
 
 
     result_metrics = metrics.classification_report(result, predict_target)
+    confusion_matrix = pd.crosstab(predict_target, result, rownames=['True'], colnames=['Predicted'], margins=True)
 
-    with open('result/knn.txt', 'a') as output:
-        output.write(result_metrics)
-        output.write("\n")
-        output.write("Use: "+str(end-begin)+"s")
-        output.write('------------------------------------\n')
+    print(confusion_matrix)
+    # with open('result/knn.txt', 'a') as output:
+    #     output.write(result_metrics)
+    #     output.write("\n")
+    #     output.write("Use: "+str(end-begin)+"s")
+    #     output.write('------------------------------------\n')
